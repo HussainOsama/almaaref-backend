@@ -43,7 +43,7 @@
     "children": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::child.child",
+      "target": "api::student.student",
       "mappedBy": "parent"
     },
     "payments": {

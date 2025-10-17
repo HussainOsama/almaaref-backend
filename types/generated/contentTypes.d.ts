@@ -430,41 +430,6 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiChildChild extends Struct.CollectionTypeSchema {
-  collectionName: 'children';
-  info: {
-    description: 'Child profile belonging to a parent';
-    displayName: 'Child';
-    pluralName: 'children';
-    singularName: 'child';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    birthdate: Schema.Attribute.Date;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    gender: Schema.Attribute.Enumeration<['male', 'female']>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::child.child'> &
-      Schema.Attribute.Private;
-    name: Schema.Attribute.String & Schema.Attribute.Required;
-    parent: Schema.Attribute.Relation<'manyToOne', 'api::parent.parent'> &
-      Schema.Attribute.Required;
-    phone: Schema.Attribute.String;
-    publishedAt: Schema.Attribute.DateTime;
-    registrations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::registration.registration'
-    >;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiEventEvent extends Struct.CollectionTypeSchema {
   collectionName: 'events';
   info: {
@@ -513,7 +478,7 @@ export interface ApiParentParent extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
-    children: Schema.Attribute.Relation<'oneToMany', 'api::child.child'>;
+    children: Schema.Attribute.Relation<'oneToMany', 'api::student.student'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -595,8 +560,6 @@ export interface ApiRegistrationRegistration
     draftAndPublish: false;
   };
   attributes: {
-    child: Schema.Attribute.Relation<'manyToOne', 'api::child.child'> &
-      Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -613,6 +576,8 @@ export interface ApiRegistrationRegistration
     status: Schema.Attribute.Enumeration<['pending', 'paid', 'canceled']> &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'pending'>;
+    student: Schema.Attribute.Relation<'manyToOne', 'api::student.student'> &
+      Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -632,10 +597,12 @@ export interface ApiStudentStudent extends Struct.CollectionTypeSchema {
   };
   attributes: {
     age: Schema.Attribute.Integer;
+    birthdate: Schema.Attribute.Date;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     gender: Schema.Attribute.Enumeration<['male', 'female']>;
+    hasParent: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -643,11 +610,19 @@ export interface ApiStudentStudent extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     name: Schema.Attribute.String & Schema.Attribute.Required;
-    password: Schema.Attribute.Password & Schema.Attribute.Private;
+    parent: Schema.Attribute.Relation<'manyToOne', 'api::parent.parent'>;
+    password: Schema.Attribute.Password &
+      Schema.Attribute.Required &
+      Schema.Attribute.Private;
     phone: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
     publishedAt: Schema.Attribute.DateTime;
+    registrations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::registration.registration'
+    >;
+    role: Schema.Attribute.Enumeration<['child', 'student']>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1164,7 +1139,6 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
-      'api::child.child': ApiChildChild;
       'api::event.event': ApiEventEvent;
       'api::parent.parent': ApiParentParent;
       'api::payment.payment': ApiPaymentPayment;

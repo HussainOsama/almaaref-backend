@@ -25,10 +25,10 @@
       "inversedBy": "registrations",
       "required": true
     },
-    "child": {
+    "student": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::child.child",
+      "target": "api::student.student",
       "inversedBy": "registrations",
       "required": true
     },

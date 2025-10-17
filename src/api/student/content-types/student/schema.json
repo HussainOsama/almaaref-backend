@@ -12,25 +12,25 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "name": {
-      "type": "string",
-      "required": true
+    "name": { "type": "string", "required": true },
+    "phone": { "type": "string", "required": true, "unique": true },
+    "password": { "type": "password", "private": true, "required": true },
+    "birthdate": { "type": "date" },
+    "gender": { "type": "enumeration", "enum": ["male", "female"] },
+    "age": { "type": "integer" },
+    "hasParent": { "type": "boolean", "default": false },
+    "role": { "type": "enumeration", "enum": ["child", "student"] },
+    "parent": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::parent.parent",
+      "inversedBy": "children"
     },
-    "phone": {
-      "type": "string",
-      "required": true,
-      "unique": true
-    },
-    "age": {
-      "type": "integer"
-    },
-    "gender": {
-      "type": "enumeration",
-      "enum": ["male", "female"]
-    },
-    "password": {
-      "type": "password",
-      "private": true
+    "registrations": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::registration.registration",
+      "mappedBy": "student"
     }
   }
 }
