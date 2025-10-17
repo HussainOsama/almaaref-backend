@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "otps",
+  "info": {
+    "singularName": "otp",
+    "pluralName": "otps",
+    "displayName": "OTP",
+    "description": "One-time passcodes for phone login"
+  },
+  "options": { "draftAndPublish": false },
+  "attributes": {
+    "phone": { "type": "string", "required": true },
+    "code": { "type": "string", "required": true },
+    "expiresAt": { "type": "datetime", "required": true },
+    "verified": { "type": "boolean", "default": false },
+    "role": { "type": "enumeration", "enum": ["parent", "student"] }
+  }
+}
