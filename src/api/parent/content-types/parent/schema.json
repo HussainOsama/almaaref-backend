@@ -1,0 +1,56 @@
+{
+  "kind": "collectionType",
+  "collectionName": "parents",
+  "info": {
+    "singularName": "parent",
+    "pluralName": "parents",
+    "displayName": "Parent",
+    "description": "Parent account representing father or mother"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "gender": {
+      "type": "enumeration",
+      "enum": ["male", "female"]
+    },
+    "phone": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "email": {
+      "type": "email"
+    },
+    "password": {
+      "type": "password",
+      "private": true
+    },
+    "role": {
+      "type": "enumeration",
+      "enum": ["father", "mother"],
+      "required": true
+    },
+    "secondary_phone": {
+      "type": "string"
+    },
+    "children": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::child.child",
+      "mappedBy": "parent"
+    },
+    "payments": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::payment.payment",
+      "mappedBy": "parent"
+    }
+  }
+}

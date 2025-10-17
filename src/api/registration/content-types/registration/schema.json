@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "registrations",
+  "info": {
+    "singularName": "registration",
+    "pluralName": "registrations",
+    "displayName": "Registration",
+    "description": "Event registration for a child with payment status"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "status": {
+      "type": "enumeration",
+      "enum": ["pending", "paid", "canceled"],
+      "default": "pending",
+      "required": true
+    },
+    "event": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::event.event",
+      "inversedBy": "registrations",
+      "required": true
+    },
+    "child": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::child.child",
+      "inversedBy": "registrations",
+      "required": true
+    },
+    "payment": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::payment.payment",
+      "mappedBy": "registration"
+    }
+  }
+}
