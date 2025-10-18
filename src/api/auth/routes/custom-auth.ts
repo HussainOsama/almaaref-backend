@@ -12,5 +12,11 @@ export default {
       handler: "custom-auth.verifyOtp",
       config: { auth: false },
     },
+    {
+      method: "POST",
+      path: "/auth/password-login",
+      handler: "custom-auth.passwordLogin",
+      config: { auth: false },
+    },
   ],
 };
