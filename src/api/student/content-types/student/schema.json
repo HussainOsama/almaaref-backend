@@ -13,8 +13,8 @@
   "pluginOptions": {},
   "attributes": {
     "name": { "type": "string", "required": true },
-    "phone": { "type": "string", "required": true, "unique": true },
-    "password": { "type": "password", "private": true, "required": true },
+    "phone": { "type": "string" },
+    "password": { "type": "password", "private": true },
     "birthdate": { "type": "date" },
     "gender": { "type": "enumeration", "enum": ["male", "female"] },
     "age": { "type": "integer" },
